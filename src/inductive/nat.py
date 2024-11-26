@@ -508,13 +508,10 @@ def by_ramp(value: int) -> Nat:
     if value <= 0:
         return Zero()
 
-    # Recursion would be more elegant, but CPython does not do
-    # tail call optimization, so we have to stick to a good ol'
-    # while loop.
     result = Zero()
 
     while value > 0:
-        result = Succ(Zero())
+        result = Succ(result)
         value -= 1
 
     return result
