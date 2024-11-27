@@ -40,12 +40,21 @@ class Zero:
         return False
 
     # forall n : Nat, 0 >= n = False
-    def __ge__(self, other: Nat, /) -> typing.Literal[False]:
-        return False
+    def __ge__(self, other: Nat, /) -> bool:
+        match other:
+            case Zero():
+                return True
+            case Succ():
+                return False
 
-    # forall n : Nat, 0 < n
-    def __lt__(self, other: Nat, /) -> typing.Literal[True]:
-        return True
+    # forall n : Nat, n == 0 -> 0 < n = False
+    # forall n : Nat, n != 0 -> 0 < n
+    def __lt__(self, other: Nat, /) -> bool:
+        match other:
+            case Zero():
+                return False
+            case Succ():
+                return True
 
     # forall n : Nat, 0 <= n
     def __le__(self, other: Nat, /) -> typing.Literal[True]:
