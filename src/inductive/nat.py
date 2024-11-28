@@ -21,9 +21,6 @@ import typing
 import attrs
 import option
 
-if typing.TYPE_CHECKING:
-    import collections.abc
-
 
 @attrs.frozen
 @typing.final
@@ -150,15 +147,6 @@ class Zero:
 
     def __bytes__(self) -> bytes:
         return b""
-
-    def __iter__(self) -> collections.abc.Generator[Nat]:
-        n = self
-
-        while n > zero:
-            yield n
-            n = pred(n)
-
-        yield n
 
 
 @attrs.frozen
@@ -324,6 +312,7 @@ class Succ[N: Nat]:
 
 
 type Nat = Zero | Succ[Nat]
+
 
 # *- Digits -* #
 
