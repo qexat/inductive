@@ -4,7 +4,8 @@
 from __future__ import annotations
 
 from hypothesis import given
-from .strategies import nats
+import option
+from .strategies import nats, nonzero_nats
 
 from inductive import config
 from inductive import nat
@@ -16,6 +17,9 @@ def setup_module():
 
 def teardown_module():
     config.teardown()
+
+
+# *- Succ, pred -* #
 
 
 # 1 = Succ(0)
@@ -34,9 +38,29 @@ def test_pred_succ_n_n(n: nat.Nat) -> None:
     assert nat.pred(nat.Succ(n)) == n
 
 
+# *- Comparison -* #
+
+
+# ∀n : Nat, 0 > n == False
+@given(nats)
+def test_zero_greater_than_n_false(n: nat.Nat) -> None:
+    assert (nat.zero > n) is False
+
+
+# ∀n : Nat, n == 0 -> 0 >= n
+def test_zero_greater_equal_zero() -> None:
+    assert nat.zero >= nat.zero
+
+
+# ∀n : Nat, n != 0 -> 0 >= n == False
+@given(nonzero_nats)
+def test_zero_greater_equal_nonzero_false(n: nat.Nat) -> None:
+    assert (nat.zero >= n) is False
+
+
 # ∀n : Nat, n != 0 -> 0 < n
-@given(nats.filter(lambda n: n != nat.zero))
-def test_zero_less_than_n(n: nat.Nat) -> None:
+@given(nonzero_nats)
+def test_zero_less_than_nonzero(n: nat.Nat) -> None:
     assert nat.zero < n
 
 
@@ -50,6 +74,9 @@ def test_zero_less_equal_than_n(n: nat.Nat) -> None:
 @given(nats, nats)
 def test_le_n_lt_succ_n(n: nat.Nat, m: nat.Nat) -> None:
     assert (n <= m) == (n < nat.Succ(m))
+
+
+# *- Arithmetic -* #
 
 
 # ∀n : nat, 0 + n == n
