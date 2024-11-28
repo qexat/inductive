@@ -113,3 +113,85 @@ def test_sub_n_zero_is_n(n: nat.Nat) -> None:
 @given(nats, nats)
 def test_sub_pred_right(n: nat.Nat, m: nat.Nat) -> None:
     assert n - nat.Succ(m) == nat.pred(n - m)
+
+
+# ∀n : nat, 0 * n == 0
+@given(nats)
+def test_mul_zero_left(n: nat.Nat) -> None:
+    assert nat.zero * n == nat.zero
+
+
+# ∀n: nat, n == 0 -> divmod(0, n) == Nothing()
+def test_divmod_zero_zero() -> None:
+    assert divmod(nat.zero, nat.zero) == option.Nothing()
+
+
+# ∀n : nat, n != 0 -> divmod(0, n) == Some((0, 0))
+@given(nonzero_nats)
+def test_divmod_zero_nonzero(n: nat.Nat) -> None:
+    assert divmod(nat.zero, n) == option.Some((nat.zero, nat.zero))
+
+
+# ∀n : nat, n == 0 -> 0 / n == Nothing()
+def test_truediv_zero_zero() -> None:
+    assert nat.zero / nat.zero == option.Nothing()
+
+
+# ∀n : nat, n != 0 -> 0 / n == Some(0)
+@given(nonzero_nats)
+def test_truediv_zero_nonzero(n: nat.Nat) -> None:
+    assert nat.zero / n == option.Some(nat.zero)
+
+
+# ∀n : nat, n == 0 -> 0 // n == 0
+def test_floordiv_zero_zero() -> None:
+    assert nat.zero // nat.zero == nat.zero
+
+
+# ∀n : nat, n != 0 -> 0 // n == 0
+@given(nonzero_nats)
+def test_floordiv_zero_nonzero(n: nat.Nat) -> None:
+    assert nat.zero // n == nat.zero
+
+
+# ∀n : nat, n == 0 -> 0 % n == 0
+def test_mod_zero_zero() -> None:
+    assert nat.zero % nat.zero == nat.zero
+
+
+# ∀n : nat, n != 0 -> 0 % n == 0
+@given(nonzero_nats)
+def test_mod_zero_nonzero(n: nat.Nat) -> None:
+    assert nat.zero % n == nat.zero
+
+
+def test_abs_zero() -> None:
+    assert abs(nat.zero) == nat.zero
+
+
+def test_bool_zero() -> None:
+    assert bool(nat.zero) is False
+
+
+def test_complex_zero() -> None:
+    assert complex(nat.zero) == 0j
+
+
+def test_float_zero() -> None:
+    assert float(nat.zero) == 0.0
+
+
+def test_int_zero() -> None:
+    assert int(nat.zero) == 0
+
+
+def test_str_zero() -> None:
+    assert str(nat.zero) == "0"
+
+
+def test_repr_zero() -> None:
+    assert repr(nat.zero) == "Zero"
+
+
+def test_bytes_zero() -> None:
+    assert bytes(nat.zero) == b""
