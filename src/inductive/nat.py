@@ -36,7 +36,8 @@ class Zero:
     def __gt__(self, other: Nat, /) -> typing.Literal[False]:
         return False
 
-    # forall n : Nat, 0 >= n = False
+    # forall n : Nat, n == 0 -> 0 >= n
+    # forall n : Nat, n != 0 -> 0 >= n = False
     def __ge__(self, other: Nat, /) -> bool:
         match other:
             case Zero():
@@ -64,7 +65,7 @@ class Zero:
         return other
 
     # forall n : nat, n + 0 = n
-    def __radd__[N: Nat](self, other: N, /) -> N:
+    def __radd__[N: Nat](self, other: N, /) -> N:  # pragma: no cover
         return other
 
     # forall n : nat, 0 - n = 0
@@ -72,7 +73,7 @@ class Zero:
         return self
 
     # forall n : nat, n - 0 = n
-    def __rsub__[N: Nat](self, other: N, /) -> N:
+    def __rsub__[N: Nat](self, other: N, /) -> N:  # pragma: no cover
         return other
 
     # forall n : nat, 0 * n = 0
@@ -80,7 +81,7 @@ class Zero:
         return self
 
     # forall n : nat, n * 0 = 0
-    def __rmul__(self, other: Nat, /) -> Zero:
+    def __rmul__(self, other: Nat, /) -> Zero:  # pragma: no cover
         return self
 
     # We implement divmod for completeness
@@ -101,7 +102,7 @@ class Zero:
                 return option.Some(self)
 
     # forall n : nat, n / 0 = Nothing
-    def __rtruediv__(self, other: Nat, /) -> option.Nothing:
+    def __rtruediv__(self, other: Nat, /) -> option.Nothing:  # pragma: no cover
         return option.Nothing()
 
     # forall n : nat, n == 0 -> 0 // n = 0
@@ -110,7 +111,7 @@ class Zero:
         return self
 
     # forall n : nat, n // 0 = 0
-    def __rfloordiv__(self, other: Nat, /) -> Zero:
+    def __rfloordiv__(self, other: Nat, /) -> Zero:  # pragma: no cover
         return self
 
     # forall n : nat, n == 0 -> 0 % n = 0
@@ -119,7 +120,7 @@ class Zero:
         return self
 
     # forall n : nat, n % 0 = 0
-    def __rmod__(self, other: Nat, /) -> Zero:
+    def __rmod__(self, other: Nat, /) -> Zero:  # pragma: no cover
         return self
 
     # *- Type conversion -* #
