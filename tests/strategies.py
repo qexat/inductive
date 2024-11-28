@@ -16,3 +16,5 @@ nats: strategies.SearchStrategy[nat.Nat] = strategies.recursive(
     extend=succs,
     max_leaves=10_000,
 )
+
+nonzero_nats = nats.filter(lambda n: n != nat.zero)
