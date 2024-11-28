@@ -47,6 +47,18 @@ def test_zero_greater_than_n_false(n: nat.Nat) -> None:
     assert (nat.zero > n) is False
 
 
+# ∀n m : Nat, m == 0 -> n > m
+@given(nats)
+def test_nat_greater_zero(n: nat.Nat) -> None:
+    assert n > nat.zero
+
+
+# ∀n m : n == 0 -> m == 0 -> pred(n) > pred(m) <-> n > m
+@given(nonzero_nats, nonzero_nats)
+def test_nonzero_greater_nonzero_pred(n: nat.Nat, m: nat.Nat) -> None:
+    assert (nat.pred(n) > nat.pred(m)) == (n > m)
+
+
 # ∀n : Nat, n == 0 -> 0 >= n
 def test_zero_greater_equal_zero() -> None:
     assert nat.zero >= nat.zero
@@ -165,33 +177,41 @@ def test_mod_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero % n == nat.zero
 
 
+# abs(0) == 0
 def test_abs_zero() -> None:
     assert abs(nat.zero) == nat.zero
 
 
+# bool(0) == False
 def test_bool_zero() -> None:
     assert bool(nat.zero) is False
 
 
+# complex(0) == 0j
 def test_complex_zero() -> None:
     assert complex(nat.zero) == 0j
 
 
+# float(0) == 0.0
 def test_float_zero() -> None:
     assert float(nat.zero) == 0.0
 
 
+# int(0) == 0
 def test_int_zero() -> None:
     assert int(nat.zero) == 0
 
 
+# str(0) == "0"
 def test_str_zero() -> None:
     assert str(nat.zero) == "0"
 
 
+# repr(0) == "Zero"
 def test_repr_zero() -> None:
     assert repr(nat.zero) == "Zero"
 
 
+# bytes(0) == b""
 def test_bytes_zero() -> None:
     assert bytes(nat.zero) == b""
