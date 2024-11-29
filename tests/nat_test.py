@@ -82,6 +82,18 @@ def test_zero_greater_equal_zero() -> None:
     assert nat.zero >= nat.zero
 
 
+# ∀n m : Nat, n == 0 -> m == 0 -> n >= m
+@given(nonzero_nats)
+def test_nat_greater_equal_zero(n: nat.Nat) -> None:
+    assert n >= nat.zero
+
+
+# ∀n m : Nat, n == 0 -> m == 0 -> pred(n) >= pred(m) <-> n >= m
+@given(nonzero_nats, nonzero_nats)
+def test_nonzero_greater_equal_nonzero_pred(n: nat.Nat, m: nat.Nat) -> None:
+    assert (nat.pred(n) >= nat.pred(m)) == (n >= m)
+
+
 # ∀n : Nat, n != 0 -> 0 >= n == False
 @given(nonzero_nats)
 def test_zero_greater_equal_nonzero_false(n: nat.Nat) -> None:
@@ -127,7 +139,19 @@ def test_add_succ_left(n: nat.Nat, m: nat.Nat) -> None:
     assert nat.Succ(n) + m == nat.Succ(n + m)
 
 
-# ∀n : nat, 0 - n == 0
+# ∀n m : Nat, n + m == m + n
+@given(nats, nats)
+def test_add_commutativity(n: nat.Nat, m: nat.Nat) -> None:
+    assert n + m == m + n
+
+
+# ∀n m p : Nat, (n + m) + p == n + (m + p)
+@given(nats, nats, nats)
+def test_add_associativity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
+    assert (n + m) + p == n + (m + p)
+
+
+# ∀n : Nat, 0 - n == 0
 @given(nats)
 def test_sub_zero_n_is_zero(n: nat.Nat) -> None:
     assert nat.zero - n == nat.zero
@@ -145,13 +169,95 @@ def test_sub_pred_right(n: nat.Nat, m: nat.Nat) -> None:
     assert n - nat.Succ(m) == nat.pred(n - m)
 
 
-# ∀n : nat, 0 * n == 0
+# ∀n m p: Nat, n - (m + p) == n - m - p
+@given(nats, nats, nats)
+def test_sub_add_distributivity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
+    assert n - (m + p) == n - m - p
+
+
+# ∀n m p: Nat, n - (m - p) == n - m + p
+@given(nats, nats, nats)
+def test_sub_sub_distributivity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
+    assert (p <= m and m <= n) == (n - (m - p) == n - m + p)
+
+
+# ∀n : Nat, 0 * n == 0
 @given(nats)
 def test_mul_zero_left(n: nat.Nat) -> None:
     assert nat.zero * n == nat.zero
 
 
-# ∀n: nat, n == 0 -> divmod(0, n) == Nothing()
+# ∀n : Nat, n * 0 == 0
+@given(nats)
+def test_mul_zero_right(n: nat.Nat) -> None:
+    assert n * nat.zero == nat.zero
+
+
+# ∀n : Nat, 1 * n == n
+@given(nats)
+def test_mul_identity_left(n: nat.Nat) -> None:
+    assert nat.one * n == n
+
+
+# ∀n : Nat, n * 1 == n
+@given(nats)
+def test_mul_identity_right(n: nat.Nat) -> None:
+    assert n * nat.one == n
+
+
+# ∀n m : Nat, n * m == m * n
+@given(nats, nats)
+def test_mul_commutativity(n: nat.Nat, m: nat.Nat) -> None:
+    assert n * m == m * n
+
+
+# ∀n m p : Nat, (n * m) * p == n * (m * p)
+@given(nats, nats, nats)
+def test_mul_associativity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
+    assert (n * m) * p == n * (m * p)
+
+
+# ∀n m p : Nat, n * (m + p) == n * m + n * p
+@given(nats, nats, nats)
+def test_mul_add_distributivity_left(
+    n: nat.Nat,
+    m: nat.Nat,
+    p: nat.Nat,
+) -> None:
+    assert n * (m + p) == n * m + n * p
+
+
+# ∀n m p : Nat, (n + m) * p == n * p + m * p
+@given(nats, nats, nats)
+def test_mul_add_distributivity_right(
+    n: nat.Nat,
+    m: nat.Nat,
+    p: nat.Nat,
+) -> None:
+    assert (n + m) * p == n * p + m * p
+
+
+# ∀n m p : Nat, n * (m - p) == n * m - n * p
+@given(nats, nats, nats)
+def test_mul_sub_distributivity_left(
+    n: nat.Nat,
+    m: nat.Nat,
+    p: nat.Nat,
+) -> None:
+    assert n * (m - p) == n * m - n * p
+
+
+# ∀n m p : Nat, (n - m) * p == n * p - m * p
+@given(nats, nats, nats)
+def test_mul_sub_distributivity_right(
+    n: nat.Nat,
+    m: nat.Nat,
+    p: nat.Nat,
+) -> None:
+    assert (n - m) * p == n * p - m * p
+
+
+# ∀n: Nat, n == 0 -> divmod(0, n) == Nothing()
 def test_divmod_zero_zero() -> None:
     assert divmod(nat.zero, nat.zero) == option.Nothing()
 
