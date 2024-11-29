@@ -271,7 +271,7 @@ class Succ[N: Nat]:
         return True
 
     def __complex__(self) -> complex:
-        return (1 + 0j) + complex(self.predecessor)  # pyright: ignore[reportArgumentType, reportCallIssue]
+        return (1.0 + 0.0j) + complex(self.predecessor)  # pyright: ignore[reportArgumentType, reportCallIssue]
 
     def __float__(self) -> float:
         return 1.0 + float(self.predecessor)  # pyright: ignore[reportArgumentType]
