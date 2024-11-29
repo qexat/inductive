@@ -338,9 +338,25 @@ def test_bool_zero() -> None:
     assert bool(nat.zero) is False
 
 
+# ∀n : Nat, n != 0 -> bool(n)
+@given(nonzero_nats)
+def test_bool_nonzero(n: nat.Nat) -> None:
+    assert bool(n) is True
+
+
 # complex(0) == 0j
 def test_complex_zero() -> None:
     assert complex(nat.zero) == 0j
+
+
+# ∀n : Nat, complex(n) == float(n) + 0j
+def test_complex_n_float(n: nat.Nat) -> None:
+    assert complex(n) == float(n) + 0j
+
+
+# ∀n : Nat, complex(n) == int(n) + 0j
+def test_complex_n_int(n: nat.Nat) -> None:
+    assert complex(n) == int(n) + 0j
 
 
 # float(0) == 0.0
