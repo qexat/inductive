@@ -41,6 +41,24 @@ def test_pred_succ_n_n(n: nat.Nat) -> None:
 # *- Comparison -* #
 
 
+# ∀n : Nat, n == n
+@given(nats)
+def test_equality_reflexivity(n: nat.Nat) -> None:
+    assert n == n
+
+
+# ∀n m : Nat, n == m <-> m == n
+@given(nats, nats)
+def test_equality_symmetry(n: nat.Nat, m: nat.Nat) -> None:
+    assert (n == m) == (m == n)
+
+
+# ∀n m p : Nat, n == m -> m == p -> n == p
+@given(nats, nats, nats)
+def test_equality_transitivity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
+    assert ((n == m) and (m == p)) == (n == p)
+
+
 # ∀n : Nat, 0 > n == False
 @given(nats)
 def test_zero_greater_than_n_false(n: nat.Nat) -> None:
