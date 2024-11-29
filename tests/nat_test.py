@@ -293,6 +293,10 @@ def test_truediv_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero / n == option.Some(nat.zero)
 
 
+# TODO: - nonzero / zero
+#       - nonzero / nonzero
+
+
 # ∀n : Nat, n == 0 -> 0 // n == 0
 def test_floordiv_zero_zero() -> None:
     assert nat.zero // nat.zero == nat.zero
@@ -302,6 +306,10 @@ def test_floordiv_zero_zero() -> None:
 @given(nonzero_nats)
 def test_floordiv_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero // n == nat.zero
+
+
+# TODO: - nonzero // zero
+#       - nonzero // nonzero
 
 
 # ∀n : Nat, n == 0 -> 0 % n == 0
@@ -315,9 +323,14 @@ def test_mod_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero % n == nat.zero
 
 
-# abs(0) == 0
-def test_abs_zero() -> None:
-    assert abs(nat.zero) == nat.zero
+# TODO: - nonzero % zero
+#       - nonzero % nonzero
+
+
+# ∀n : Nat, abs(n) == n
+@given(nats)
+def test_abs_nonzero(n: nat.Nat) -> None:
+    assert abs(n) == n
 
 
 # bool(0) == False
