@@ -270,6 +270,18 @@ def test_divmod_zero_nonzero(n: nat.Nat) -> None:
     assert divmod(nat.zero, n) == option.Some((nat.zero, nat.zero))
 
 
+# ∀n : Nat, divmod(n, 0) == Nothing()
+@given(nats)
+def test_divmod_n_zero(n: nat.Nat) -> None:
+    assert divmod(n, nat.zero) == option.Nothing()
+
+
+# ∀n : Nat, divmod(n, 1) == Some((n, 0))
+@given(nats)
+def test_divmod_n_one(n: nat.Nat) -> None:
+    assert divmod(n, nat.one) == option.Some((n, nat.zero))
+
+
 # ∀n : Nat, n == 0 -> 0 / n == Nothing()
 def test_truediv_zero_zero() -> None:
     assert nat.zero / nat.zero == option.Nothing()
