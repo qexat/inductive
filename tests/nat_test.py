@@ -65,15 +65,15 @@ def test_zero_greater_than_n_false(n: nat.Nat) -> None:
     assert (nat.zero > n) is False
 
 
-# ∀n m : Nat, m == 0 -> n > m
-@given(nats)
+# ∀n m : Nat, n == 0 -> m == 0 -> n > m
+@given(nonzero_nats)
 def test_nat_greater_zero(n: nat.Nat) -> None:
     assert n > nat.zero
 
 
-# ∀n m : n == 0 -> m == 0 -> pred(n) > pred(m) <-> n > m
+# ∀n m : Nat, n == 0 -> m == 0 -> pred(n) > pred(m) <-> n > m
 @given(nonzero_nats, nonzero_nats)
-def test_nonzero_greater_nonzero_pred(n: nat.Nat, m: nat.Nat) -> None:
+def test_nonzero_greater_than_nonzero_pred(n: nat.Nat, m: nat.Nat) -> None:
     assert (nat.pred(n) > nat.pred(m)) == (n > m)
 
 
@@ -100,7 +100,7 @@ def test_zero_less_equal_than_n(n: nat.Nat) -> None:
     assert nat.zero <= n
 
 
-# ∀n m : nat, n <= m -> n < Succ(m)
+# ∀n m : Nat, n <= m -> n < Succ(m)
 @given(nats, nats)
 def test_le_n_lt_succ_n(n: nat.Nat, m: nat.Nat) -> None:
     assert (n <= m) == (n < nat.Succ(m))
@@ -109,19 +109,19 @@ def test_le_n_lt_succ_n(n: nat.Nat, m: nat.Nat) -> None:
 # *- Arithmetic -* #
 
 
-# ∀n : nat, 0 + n == n
+# ∀n : Nat, 0 + n == n
 @given(nats)
 def test_add_left_zero_elim(n: nat.Nat) -> None:
     assert nat.zero + n == n
 
 
-# ∀n : nat, n + 0 == n
+# ∀n : Nat, n + 0 == n
 @given(nats)
 def test_add_right_zero_elim(n: nat.Nat) -> None:
     assert n + nat.zero == n
 
 
-# ∀n m : nat, Succ(n) + m == Succ(n + m)
+# ∀n m : Nat, Succ(n) + m == Succ(n + m)
 @given(nats, nats)
 def test_add_succ_left(n: nat.Nat, m: nat.Nat) -> None:
     assert nat.Succ(n) + m == nat.Succ(n + m)
@@ -133,13 +133,13 @@ def test_sub_zero_n_is_zero(n: nat.Nat) -> None:
     assert nat.zero - n == nat.zero
 
 
-# ∀n : nat, n - 0 == n
+# ∀n : Nat, n - 0 == n
 @given(nats)
 def test_sub_n_zero_is_n(n: nat.Nat) -> None:
     assert n - nat.zero == n
 
 
-# ∀n m : nat, n - Succ(m) == pred(n - m)
+# ∀n m : Nat, n - Succ(m) == pred(n - m)
 @given(nats, nats)
 def test_sub_pred_right(n: nat.Nat, m: nat.Nat) -> None:
     assert n - nat.Succ(m) == nat.pred(n - m)
@@ -156,40 +156,40 @@ def test_divmod_zero_zero() -> None:
     assert divmod(nat.zero, nat.zero) == option.Nothing()
 
 
-# ∀n : nat, n != 0 -> divmod(0, n) == Some((0, 0))
+# ∀n : Nat, n != 0 -> divmod(0, n) == Some((0, 0))
 @given(nonzero_nats)
 def test_divmod_zero_nonzero(n: nat.Nat) -> None:
     assert divmod(nat.zero, n) == option.Some((nat.zero, nat.zero))
 
 
-# ∀n : nat, n == 0 -> 0 / n == Nothing()
+# ∀n : Nat, n == 0 -> 0 / n == Nothing()
 def test_truediv_zero_zero() -> None:
     assert nat.zero / nat.zero == option.Nothing()
 
 
-# ∀n : nat, n != 0 -> 0 / n == Some(0)
+# ∀n : Nat, n != 0 -> 0 / n == Some(0)
 @given(nonzero_nats)
 def test_truediv_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero / n == option.Some(nat.zero)
 
 
-# ∀n : nat, n == 0 -> 0 // n == 0
+# ∀n : Nat, n == 0 -> 0 // n == 0
 def test_floordiv_zero_zero() -> None:
     assert nat.zero // nat.zero == nat.zero
 
 
-# ∀n : nat, n != 0 -> 0 // n == 0
+# ∀n : Nat, n != 0 -> 0 // n == 0
 @given(nonzero_nats)
 def test_floordiv_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero // n == nat.zero
 
 
-# ∀n : nat, n == 0 -> 0 % n == 0
+# ∀n : Nat, n == 0 -> 0 % n == 0
 def test_mod_zero_zero() -> None:
     assert nat.zero % nat.zero == nat.zero
 
 
-# ∀n : nat, n != 0 -> 0 % n == 0
+# ∀n : Nat, n != 0 -> 0 % n == 0
 @given(nonzero_nats)
 def test_mod_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero % n == nat.zero
