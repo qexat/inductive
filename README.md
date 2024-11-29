@@ -1,3 +1,3 @@
 # inductive
 
-`inductive` is a library that defines inductive data structures such as Peano numbers and linked lists.
+`inductive` is a Python library that defines inductive data structures such as Peano numbers and linked lists.
