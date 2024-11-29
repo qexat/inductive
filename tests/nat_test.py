@@ -56,7 +56,8 @@ def test_equality_symmetry(n: nat.Nat, m: nat.Nat) -> None:
 # ∀n m p : Nat, n == m -> m == p -> n == p
 @given(nats, nats, nats)
 def test_equality_transitivity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
-    assert ((n == m) and (m == p)) == (n == p)
+    if n == m and m == p:
+        assert n == p
 
 
 # ∀n : Nat, 0 > n == False
@@ -178,7 +179,8 @@ def test_sub_add_distributivity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
 # ∀n m p: Nat, n - (m - p) == n - m + p
 @given(nats, nats, nats)
 def test_sub_sub_distributivity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
-    assert (p <= m and m <= n) == (n - (m - p) == n - m + p)
+    if p <= m and m <= n:
+        assert n - (m - p) == n - m + p
 
 
 # ∀n : Nat, 0 * n == 0
