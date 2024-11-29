@@ -364,14 +364,24 @@ def test_float_zero() -> None:
     assert float(nat.zero) == 0.0
 
 
+# TODO: n <= m <-> float(n) <= float(m)
+
+
 # int(0) == 0
 def test_int_zero() -> None:
     assert int(nat.zero) == 0
 
 
+# TODO: n == m <-> int(n) == int(m)
+
+
 # str(0) == "0"
 def test_str_zero() -> None:
     assert str(nat.zero) == "0"
+
+
+# TODO: n == m <-> str(n) == str(m)
+# TODO: int(str(n)) == int(n)
 
 
 # repr(0) == "Zero"
@@ -382,3 +392,6 @@ def test_repr_zero() -> None:
 # bytes(0) == b""
 def test_bytes_zero() -> None:
     assert bytes(nat.zero) == b""
+
+
+# TODO: len(bytes(n)) == int(n)
