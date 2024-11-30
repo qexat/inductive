@@ -304,9 +304,7 @@ class Succ[N: Nat]:
         return str(tens) + str(units)
 
     def __repr__(self) -> str:
-        predecessor_repr = "..." if self > five else repr(self.predecessor)
-
-        return f"Succ({predecessor_repr})"
+        return f"Succ({self.predecessor!r})"
 
     def __bytes__(self) -> bytes:
         return b"\x00" + bytes(self.predecessor)  # pyright: ignore[reportArgumentType]
