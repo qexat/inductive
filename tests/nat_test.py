@@ -361,6 +361,32 @@ def test_mod_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero % n == nat.zero
 
 
+# ∀n m : Nat, n != 0 -> m == 0 -> n % m == 0
+@given(nonzero_nats)
+def test_mod_nonzero_zero(n: nat.Nat) -> None:
+    assert n % nat.zero == nat.zero
+
+
+# ∀n m : Nat, n != 0 -> m != 0 -> n < m -> n % m == n
+@given(nonzero_nats, nonzero_nats)
+def test_mod_nonzero_nonzero_less(n: nat.Nat, m: nat.Nat) -> None:
+    if n < m:
+        assert n % m == n
+
+
+# ∀n m : Nat, n != 0 -> m != 0 -> n == m -> n % m == 0
+@given(nonzero_nats, nonzero_nats)
+def test_mod_nonzero_nonzero_equal(n: nat.Nat, m: nat.Nat) -> None:
+    if n == m:
+        assert n % m == nat.zero
+
+
+# ∀n m : Nat, n != 0 -> m != 0 -> n % m < m
+@given(nonzero_nats, nonzero_nats)
+def test_mod_nonzero_nonzero_cycle(n: nat.Nat, m: nat.Nat) -> None:
+    assert n % m < m
+
+
 # ∀n : Nat, abs(n) == n
 @given(nats)
 def test_abs_nonzero(n: nat.Nat) -> None:
