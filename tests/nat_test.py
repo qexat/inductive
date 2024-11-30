@@ -317,10 +317,6 @@ def test_floordiv_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero // n == nat.zero
 
 
-# TODO: - nonzero // zero
-#       - nonzero // nonzero
-
-
 # ∀n : Nat, n != 0 -> n // 0 == 0
 @given(nonzero_nats)
 def test_floordiv_nonzero_zero(n: nat.Nat) -> None:
@@ -363,10 +359,6 @@ def test_mod_zero_zero() -> None:
 @given(nonzero_nats)
 def test_mod_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero % n == nat.zero
-
-
-# TODO: - nonzero % zero
-#       - nonzero % nonzero
 
 
 # ∀n : Nat, abs(n) == n
