@@ -366,6 +366,7 @@ def test_float_zero() -> None:
     assert float(nat.zero) == 0.0
 
 
+# ∀n m : Nat, n < m <-> float(n) < float(m)
 @given(nats, nats)
 def test_float_order_preservation(n: nat.Nat, m: nat.Nat) -> None:
     assert (n < m) == (float(n) < float(m))
@@ -376,6 +377,7 @@ def test_int_zero() -> None:
     assert int(nat.zero) == 0
 
 
+# ∀n m : Nat, n == m <-> int(n) == int(m)
 @given(nats, nats)
 def test_int_bijective(n: nat.Nat, m: nat.Nat) -> None:
     assert (n == m) == (int(n) == int(m))
@@ -386,11 +388,13 @@ def test_str_zero() -> None:
     assert str(nat.zero) == "0"
 
 
+# ∀n m : Nat, n == m <-> str(n) == str(m)
 @given(nats, nats)
 def test_str_bijective(n: nat.Nat, m: nat.Nat) -> None:
     assert (n == m) == (str(n) == str(m))
 
 
+# ∀n : Nat, int(str(n)) == int(n)
 @given(nats)
 def test_int_str_int(n: nat.Nat) -> None:
     assert int(str(n)) == int(n)
@@ -412,6 +416,7 @@ def test_bytes_zero() -> None:
     assert bytes(nat.zero) == b""
 
 
+# ∀n : Nat, length_of(bytes(n)) == n
 @given(nats)
 def test_length_of_bytes_n(n: nat.Nat) -> None:
     assert nat.length_of(bytes(n)) == n
