@@ -215,6 +215,11 @@ class Succ[N: Nat]:
 
     # *- Arithmetic -* #
 
+    @typing.overload
+    def __add__(self, other: Zero, /) -> typing.Self: ...
+    @typing.overload
+    def __add__(self, other: Succ[Nat], /) -> Nat: ...
+
     def __add__(self, other: Nat, /) -> typing.Self | Nat:
         match other:
             case Zero():
@@ -223,12 +228,26 @@ class Succ[N: Nat]:
                 # XXX: Pyright fails to infer the type of that
                 return Succ(self) + other.predecessor  # pyright: ignore[reportArgumentType, reportUnknownVariableType]
 
+    @typing.overload
+    def __sub__(self, other: Zero, /) -> typing.Self: ...
+    @typing.overload
+    def __sub__(self, other: typing.Self, /) -> Zero: ...
+    @typing.overload
+    def __sub__(self, other: Succ[Nat], /) -> Nat: ...
+
     def __sub__(self, other: Nat, /) -> typing.Self | Nat:
         match other:
             case Zero():
                 return self
             case Succ():
                 return self.predecessor - other.predecessor
+
+    @typing.overload
+    def __mul__(self, other: Zero, /) -> Zero: ...
+    @typing.overload
+    def __mul__[N0: Nat](self: N0, other: Succ[Zero], /) -> N0: ...
+    @typing.overload
+    def __mul__(self, other: Succ[Nat], /) -> Nat: ...
 
     def __mul__(self, other: Nat, /) -> typing.Self | Nat:
         match other:
