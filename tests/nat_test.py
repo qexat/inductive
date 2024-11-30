@@ -56,6 +56,7 @@ def test_equality_symmetry(n: nat.Nat, m: nat.Nat) -> None:
 # ∀n m p : Nat, n == m -> m == p -> n == p
 @given(nats, nats, nats)
 def test_equality_transitivity(n: nat.Nat, m: nat.Nat, p: nat.Nat) -> None:
+    # it's pretty bad, but assume() raises FailedHealthCheck
     if n == m and m == p:
         assert n == p
 
@@ -318,6 +319,39 @@ def test_floordiv_zero_nonzero(n: nat.Nat) -> None:
 
 # TODO: - nonzero // zero
 #       - nonzero // nonzero
+
+
+# ∀n : Nat, n != 0 -> n // 0 == 0
+@given(nonzero_nats)
+def test_floordiv_nonzero_zero(n: nat.Nat) -> None:
+    assert (n // nat.zero) == nat.zero
+
+
+# ∀n : Nat, n != 0 -> n // n == 1
+@given(nonzero_nats)
+def test_floordiv_nonzero_identity(n: nat.Nat) -> None:
+    assert (n // n) == nat.one
+
+
+# ∀n m : Nat, n != 0 -> m != 0 -> n < m -> n // m == 0
+@given(nonzero_nats, nonzero_nats)
+def test_floordiv_nonzero_nonzero_less(n: nat.Nat, m: nat.Nat) -> None:
+    if n < m:
+        assert (n // m) == nat.zero
+
+
+# ∀n m : Nat, n != 0 -> m != 0 -> n == m -> n // m == 1
+@given(nonzero_nats, nonzero_nats)
+def test_floordiv_nonzero_nonzero_equal(n: nat.Nat, m: nat.Nat) -> None:
+    if n == m:
+        assert (n // m) == nat.one
+
+
+# ∀n m : Nat, n != 0 -> m != 0 -> n > m -> n // m >= 1
+@given(nonzero_nats, nonzero_nats)
+def test_floordiv_nonzero_nonzero_greater(n: nat.Nat, m: nat.Nat) -> None:
+    if n > m:
+        assert (n // m) >= nat.one
 
 
 # ∀n : Nat, n == 0 -> 0 % n == 0
