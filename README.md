@@ -2,7 +2,7 @@
 
 `inductive` is a Python library that defines inductive data structures such as Peano numbers and linked lists.
 
-> [!WARNING]
+> [!CAUTION]
 > It is still in early development.
 
 ## A missing puzzle piece
@@ -10,7 +10,7 @@
 Despite being very useful, Python does not have a [built-in unsigned integer data type](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex). Futhermore, it does not provide the ability to refine the existing `int` type by disallowing negative numbers - at least, not in a way that static type checkers like [`mypy`](https://mypy-lang.org/) or [`pyright`](https://microsoft.github.io/pyright/) can pick up.
 And yet, natural numbers come up on many occasions, such as counting or ordering, or in mundane programming tasks.
 
-> [!INFO]
+>[!TIP]
 > If you have ever created your own sequence type, and defined `__len__`, you are probably aware that you get a runtime error if it returns an integer below 0.
 
 Fortunately for us, over the years, the language's type system [has become powerful enough](https://docs.python.org/3/reference/simple_stmts.html#type) to be able to encode [inductive types](https://en.wikipedia.org/wiki/Inductive_type).
@@ -39,7 +39,7 @@ With the `type` statement added in Python 3.12 and structural pattern matching w
 
 Especially, I'm looking forward adding linked lists, inductive sets, trees, other numeric types that fit very well this little world.
 
->[!NOTE]
+>[!IMPORTANT]
 > For now, only `Nat` is implemented, but it's just a matter of time before the others get added too 😄
 
 `inductive` also provides a submodule `builtins` which goal is to override existing built-ins to use better suited types: for example, `len` is replaced by `length`, which returns a `Nat`, more appropriated since `len` can never return a negative number.
