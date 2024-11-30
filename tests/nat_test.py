@@ -533,3 +533,63 @@ def test_bytes_zero() -> None:
 @given(nats)
 def test_length_of_bytes_n(n: nat.Nat) -> None:
     assert nat.length_of(bytes(n)) == n
+
+
+# ∀n : Nat, n == 0 -> n.double() == 0
+def test_double_zero() -> None:
+    assert nat.zero.double() == nat.zero
+
+
+# ∀n : Nat, n != 0 -> n.double() > n
+@given(nonzero_nats)
+def test_double_nonzero(n: nat.Nat) -> None:
+    assert n.double() > n
+
+
+# ∀n : Nat, n == 0 -> n.square() == 0
+def test_square_zero() -> None:
+    assert nat.zero.square() == nat.zero
+
+
+# ∀n : Nat, n == 1 -> n.square() == 1
+def test_square_one() -> None:
+    assert nat.one.square() == nat.one
+
+
+# ∀n : Nat, n > 1 -> n.square() > n
+@given(nats.filter(lambda n: n > nat.one))
+def test_square_nonzero(n: nat.Nat) -> None:
+    assert n.square() > n
+
+
+# ∀n : Nat, n == 0 -> n.is_odd() == False
+def test_is_odd_zero() -> None:
+    assert nat.zero.is_odd() is False
+
+
+# ∀n : Nat, n != 0 -> n.is_odd() == not pred(n).is_odd()
+@given(nonzero_nats)
+def test_is_odd_nonzero_not_pred(n: nat.Nat) -> None:
+    assert n.is_odd() == (not nat.pred(n).is_odd())
+
+
+# ∀n : Nat, n == 0 -> n.is_even() == False
+def test_is_even_zero() -> None:
+    assert nat.zero.is_even() is True
+
+
+# ∀n : Nat, n != 0 -> n.is_even() == not pred(n).is_even()
+@given(nonzero_nats)
+def test_is_even_nonzero_not_pred(n: nat.Nat) -> None:
+    assert n.is_even() == (not nat.pred(n).is_even())
+
+
+# ∀n : Nat, n == 0 -> n.as_integer_ratio() == (0, 1)
+def test_as_integer_ratio_zero() -> None:
+    assert nat.zero.as_integer_ratio() == (0, 1)
+
+
+# ∀n : Nat, n != 0 -> n.as_integer_ratio() == (int(n), 1)
+@given(nonzero_nats)
+def test_as_integer_ratio_nonzero(n: nat.Nat) -> None:
+    assert n.as_integer_ratio() == (int(n), 1)
