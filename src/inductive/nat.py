@@ -318,17 +318,18 @@ type Nat = Zero | Succ[Nat]
 
 # *- Digits -* #
 
-zero = Zero()
-one = Succ(Zero())
-two = Succ(one)
-three = Succ(two)
-four = Succ(three)
-five = Succ(four)
-six = Succ(five)
-seven = Succ(six)
-eight = Succ(seven)
-nine = Succ(eight)
-ten = Succ(nine)
+zero: typing.Final = Zero()
+one: typing.Final = Succ(Zero())
+two: typing.Final = Succ(one)
+three: typing.Final = Succ(two)
+four: typing.Final = Succ(three)
+five: typing.Final = Succ(four)
+six: typing.Final = Succ(five)
+seven: typing.Final = Succ(six)
+eight: typing.Final = Succ(seven)
+nine: typing.Final = Succ(eight)
+ten: typing.Final = Succ(nine)
+
 
 # *- Methods -* #
 
@@ -435,7 +436,7 @@ def as_integer_ratio(n: Nat) -> tuple[int, typing.Literal[1]]:
     return (int(n), 1)
 
 
-# *- Constructors from built-in integers -* #
+# *- Constructors from built-in types -* #
 
 
 @typing.overload
