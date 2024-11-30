@@ -366,7 +366,9 @@ def test_float_zero() -> None:
     assert float(nat.zero) == 0.0
 
 
-# TODO: n <= m <-> float(n) <= float(m)
+@given(nats, nats)
+def test_float_order_preservation(n: nat.Nat, m: nat.Nat) -> None:
+    assert (n < m) == (float(n) < float(m))
 
 
 # int(0) == 0
@@ -374,7 +376,9 @@ def test_int_zero() -> None:
     assert int(nat.zero) == 0
 
 
-# TODO: n == m <-> int(n) == int(m)
+@given(nats, nats)
+def test_int_bijective(n: nat.Nat, m: nat.Nat) -> None:
+    assert (n == m) == (int(n) == int(m))
 
 
 # str(0) == "0"
@@ -382,8 +386,14 @@ def test_str_zero() -> None:
     assert str(nat.zero) == "0"
 
 
-# TODO: n == m <-> str(n) == str(m)
-# TODO: int(str(n)) == int(n)
+@given(nats, nats)
+def test_str_bijective(n: nat.Nat, m: nat.Nat) -> None:
+    assert (n == m) == (str(n) == str(m))
+
+
+@given(nats)
+def test_int_str_int(n: nat.Nat) -> None:
+    assert int(str(n)) == int(n)
 
 
 # repr(0) == "Zero"
@@ -391,9 +401,17 @@ def test_repr_zero() -> None:
     assert repr(nat.zero) == "Zero"
 
 
+# ∀n : Nat, n != 0 -> repr(n) == "Succ(" + repr(pred(n)) + ")"
+@given(nonzero_nats)
+def test_repr_inductive(n: nat.Nat) -> None:
+    assert repr(n) == f"Succ({repr(nat.pred(n))})"
+
+
 # bytes(0) == b""
 def test_bytes_zero() -> None:
     assert bytes(nat.zero) == b""
 
 
-# TODO: len(bytes(n)) == int(n)
+@given(nats)
+def test_length_of_bytes_n(n: nat.Nat) -> None:
+    assert nat.length_of(bytes(n)) == n
