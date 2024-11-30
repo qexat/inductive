@@ -131,6 +131,47 @@ class Zero:
     def __bytes__(self) -> bytes:
         return b""
 
+    # *- Methods -* #
+
+    def double(self) -> Zero:
+        """
+        Return the double of the number.
+        """
+
+        return self
+
+    def square(self) -> Zero:
+        """
+        Return the number multiplied by itself.
+        """
+
+        return self
+
+    def is_odd(self) -> typing.Literal[False]:  # noqa: PLR6301
+        """
+        Return whether the number is odd or not.
+        """
+
+        return False
+
+    def is_even(self) -> typing.Literal[True]:  # noqa: PLR6301
+        """
+        Return whether the number is even or not.
+        """
+
+        return True
+
+    def as_integer_ratio(  # noqa: PLR6301
+        self: Nat,
+    ) -> tuple[typing.Literal[0], typing.Literal[1]]:
+        """
+        Return a pair of integers, whose ratio is equal to the original int.
+
+        The ratio is in lowest terms and has a positive denominator.
+        """
+
+        return (0, 1)
+
 
 @attrs.frozen
 @typing.final
@@ -277,6 +318,49 @@ class Succ[N: Nat]:
     def __bytes__(self) -> bytes:
         return b"\x00" + bytes(self.predecessor)  # pyright: ignore[reportArgumentType]
 
+    # *- Methods -* #
+
+    def double(self) -> Nat:
+        """
+        Return the number added to itself.
+        """
+
+        return self + self
+
+    def square(self) -> Nat:
+        """
+        Return the number multiplied by itself.
+        """
+
+        return self * self
+
+    def is_odd(self) -> bool:
+        """
+        Return whether the number is odd or not.
+        """
+
+        # This does NOT end in infinite recursion because
+        # `self.predecessor` can be `Zero`
+        return not self.predecessor.is_odd()
+
+    def is_even(self) -> bool:
+        """
+        Return whether the number is even or not.
+        """
+
+        # This does NOT end in infinite recursion because
+        # `self.predecessor` can be `Zero`
+        return not self.predecessor.is_even()
+
+    def as_integer_ratio(self: Nat) -> tuple[int, typing.Literal[1]]:
+        """
+        Return a pair of integers, whose ratio is equal to the original int.
+
+        The ratio is in lowest terms and has a positive denominator.
+        """
+
+        return (int(self), 1)
+
 
 type Nat = Zero | Succ[Nat]
 
@@ -325,80 +409,36 @@ def pred[N: Nat](n: Zero | Succ[N]) -> Zero | N:
             return m
 
 
-def double(n: Nat) -> Nat:
-    """
-    Return the double of `n`.
-    """
+def _alternating_predicate(n: Nat, *, base: bool) -> bool:
+    result = base
 
-    return n + n
+    while n > zero:
+        n = pred(n)
+        result = not result
 
-
-def square(n: Nat) -> Nat:
-    """
-    Return the square of `n`.
-    """
-
-    return n * n
-
-
-def ramp(n: Nat) -> Nat:
-    """
-    Return `max(0, n)`.
-
-    Since `n` is always greater or equal to 0, this function is
-    essentially a no-op.
-    """
-
-    return n
-
-
-def ramp_inverse(_: Nat) -> Zero:
-    """
-    Return `min(0, n)`.
-
-    Since `n` is always greater or equal to 0, this function
-    returns 0.
-    """
-
-    return Zero()
+    return result
 
 
 def is_odd(n: Nat) -> bool:
     """
     Return whether `n` is odd.
+
+    Probably faster than the corresponding method as it does not
+    use recursion.
     """
 
-    result = False
-
-    while n > zero:
-        n = pred(n)
-        result = not result
-
-    return result
+    return _alternating_predicate(n, base=Zero().is_odd())
 
 
 def is_even(n: Nat) -> bool:
     """
     Return whether `n` is even.
+
+    Probably faster than the corresponding method as it does not
+    use recursion.
     """
 
-    result = True
-
-    while n > zero:
-        n = pred(n)
-        result = not result
-
-    return result
-
-
-def as_integer_ratio(n: Nat) -> tuple[int, typing.Literal[1]]:
-    """
-    Return a pair of integers, whose ratio is equal to the original int.
-
-    The ratio is in lowest terms and has a positive denominator.
-    """
-
-    return (int(n), 1)
+    return _alternating_predicate(n, base=Zero().is_even())
 
 
 # *- Constructors from built-in types -* #
