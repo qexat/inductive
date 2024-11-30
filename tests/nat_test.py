@@ -22,12 +22,12 @@ def teardown_module():
     config.teardown()
 
 
-# *- Succ, pred -* #
+# *- succ, pred -* #
 
 
 # 1 = Succ(0)
 def test_1_succ_0() -> None:
-    assert nat.one == nat.Succ(nat.zero)
+    assert nat.one == nat.succ(nat.zero)
 
 
 # pred(0) = 0
@@ -35,10 +35,10 @@ def test_pred_0_0() -> None:
     assert nat.pred(nat.zero) == nat.zero
 
 
-# ∀n : Nat, pred(Succ(n)) == n
+# ∀n : Nat, pred(succ(n)) == n
 @given(nats)
 def test_pred_succ_n_n(n: nat.Nat) -> None:
-    assert nat.pred(nat.Succ(n)) == n
+    assert nat.pred(nat.succ(n)) == n
 
 
 # *- Comparison -* #
