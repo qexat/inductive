@@ -46,4 +46,4 @@ Especially, I'm looking forward adding linked lists, inductive sets, trees, othe
 
 ## Where does this idea come from?
 
-More specifically, this library is heavily inspired by the proof assistant Rocq (previously known as Coq) and its programming language Gallina, which are based on a type theory called [calculus of constructions](https://en.wikipedia.org/wiki/Calculus_of_constructions), and more recently on its variant called [PCUIC](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.FSCD.2018.29) (predicative calculus of cumulative inductive constructions).
+More specifically, this library is heavily inspired by the proof assistant [Rocq](https://en.wikipedia.org/wiki/Coq_(software)) (previously known as Coq) and its programming language Gallina, which are based on a type theory called [calculus of constructions](https://en.wikipedia.org/wiki/Calculus_of_constructions), and more recently on its variant called [PCUIC](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.FSCD.2018.29) (predicative calculus of cumulative inductive constructions).
