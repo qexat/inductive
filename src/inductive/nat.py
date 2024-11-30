@@ -428,38 +428,6 @@ def pred[N: Nat](n: Zero | Succ[N]) -> Zero | N:
             return m
 
 
-def _alternating_predicate(n: Nat, *, base: bool) -> bool:
-    result = base
-
-    while n > zero:
-        n = pred(n)
-        result = not result
-
-    return result
-
-
-def is_odd(n: Nat) -> bool:
-    """
-    Return whether `n` is odd.
-
-    Probably faster than the corresponding method as it does not
-    use recursion.
-    """
-
-    return _alternating_predicate(n, base=Zero().is_odd())
-
-
-def is_even(n: Nat) -> bool:
-    """
-    Return whether `n` is even.
-
-    Probably faster than the corresponding method as it does not
-    use recursion.
-    """
-
-    return _alternating_predicate(n, base=Zero().is_even())
-
-
 # *- Constructors from built-in types -* #
 
 
