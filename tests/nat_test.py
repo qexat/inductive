@@ -293,8 +293,16 @@ def test_truediv_zero_nonzero(n: nat.Nat) -> None:
     assert nat.zero / n == option.Some(nat.zero)
 
 
-# TODO: - nonzero / zero
-#       - nonzero / nonzero
+# ∀n m : Nat, n != 0 -> m == 0 -> n / m == Nothing()
+@given(nonzero_nats)
+def test_truediv_nonzero_zero(n: nat.Nat) -> None:
+    assert n / nat.zero == option.Nothing()
+
+
+# ∀n m : Nat, n != 0 -> m != 0 -> (n / m : Some)
+@given(nonzero_nats, nonzero_nats)
+def test_truediv_nonzero_nonzero(n: nat.Nat, m: nat.Nat) -> None:
+    assert isinstance(n / m, option.Some)
 
 
 # ∀n : Nat, n == 0 -> 0 // n == 0
