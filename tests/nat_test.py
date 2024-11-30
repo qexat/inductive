@@ -451,6 +451,56 @@ def test_str_zero() -> None:
     assert str(nat.zero) == "0"
 
 
+# str(1) == "1"
+def test_str_one() -> None:
+    assert str(nat.one) == "1"
+
+
+# str(2) == "2"
+def test_str_two() -> None:
+    assert str(nat.two) == "2"
+
+
+# str(3) == "3"
+def test_str_three() -> None:
+    assert str(nat.three) == "3"
+
+
+# str(4) == "4"
+def test_str_four() -> None:
+    assert str(nat.four) == "4"
+
+
+# str(5) == "5"
+def test_str_five() -> None:
+    assert str(nat.five) == "5"
+
+
+# str(6) == "6"
+def test_str_six() -> None:
+    assert str(nat.six) == "6"
+
+
+# str(7) == "7"
+def test_str_seven() -> None:
+    assert str(nat.seven) == "7"
+
+
+# str(8) == "8"
+def test_str_eight() -> None:
+    assert str(nat.eight) == "8"
+
+
+# str(9) == "9"
+def test_str_nine() -> None:
+    assert str(nat.nine) == "9"
+
+
+# str(10) == "10"
+def test_str_ten() -> None:
+    assert str(nat.ten) == "10"
+
+
 # ∀n m : Nat, n == m <-> str(n) == str(m)
 @given(nats, nats)
 def test_str_bijective(n: nat.Nat, m: nat.Nat) -> None:
