@@ -21,6 +21,9 @@ import typing
 import attrs
 import option
 
+if typing.TYPE_CHECKING:
+    import collections.abc
+
 
 @attrs.frozen
 @typing.final
@@ -512,3 +515,12 @@ def by_ramp(value: int) -> Nat:
         value -= 1
 
     return result
+
+
+def length_of(container: collections.abc.Sized) -> Nat:
+    """
+    Return the length of `container`. It is exactly like the
+    built-in function `len`, except that it returns a `Nat`.
+    """
+
+    return from_builtin_int_exn(len(container))
