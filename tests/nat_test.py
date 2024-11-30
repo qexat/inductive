@@ -350,11 +350,13 @@ def test_complex_zero() -> None:
 
 
 # ∀n : Nat, complex(n) == float(n) + 0j
+@given(nats)
 def test_complex_n_float(n: nat.Nat) -> None:
     assert complex(n) == float(n) + 0j
 
 
 # ∀n : Nat, complex(n) == int(n) + 0j
+@given(nats)
 def test_complex_n_int(n: nat.Nat) -> None:
     assert complex(n) == int(n) + 0j
 
