@@ -35,12 +35,9 @@ class Zero:
     # *- Comparison -* #
     # equality is handled by attrs
 
-    # forall n : Nat, 0 > n = False
     def __gt__(self, other: Nat, /) -> typing.Literal[False]:
         return False
 
-    # forall n : Nat, n == 0 -> 0 >= n
-    # forall n : Nat, n != 0 -> 0 >= n = False
     def __ge__(self, other: Nat, /) -> bool:
         match other:
             case Zero():
@@ -48,8 +45,6 @@ class Zero:
             case Succ():
                 return False
 
-    # forall n : Nat, n == 0 -> 0 < n = False
-    # forall n : Nat, n != 0 -> 0 < n
     def __lt__(self, other: Nat, /) -> bool:
         match other:
             case Zero():
@@ -57,33 +52,26 @@ class Zero:
             case Succ():
                 return True
 
-    # forall n : Nat, 0 <= n
     def __le__(self, other: Nat, /) -> typing.Literal[True]:
         return True
 
     # *- Arithmetic -* #
 
-    # forall n : Nat, 0 + n = n
     def __add__[N: Nat](self, other: N, /) -> N:
         return other
 
-    # forall n : nat, n + 0 = n
     def __radd__[N: Nat](self, other: N, /) -> N:  # pragma: no cover
         return other
 
-    # forall n : nat, 0 - n = 0
     def __sub__(self, other: Nat, /) -> Zero:
         return self
 
-    # forall n : nat, n - 0 = n
     def __rsub__[N: Nat](self, other: N, /) -> N:  # pragma: no cover
         return other
 
-    # forall n : nat, 0 * n = 0
     def __mul__(self, other: Nat, /) -> Zero:
         return self
 
-    # forall n : nat, n * 0 = 0
     def __rmul__(self, other: Nat, /) -> Zero:  # pragma: no cover
         return self
 
@@ -95,8 +83,6 @@ class Zero:
             case Succ():
                 return option.Some((Zero(), Zero()))
 
-    # forall n : nat, n == 0 -> 0 / n = Nothing
-    # forall n : nat, n != 0 -> 0 / n = Some(0)
     def __truediv__(self, other: Nat, /) -> option.Option[Zero]:
         match other:
             case Zero():
@@ -104,25 +90,18 @@ class Zero:
             case Succ():
                 return option.Some(self)
 
-    # forall n : nat, n / 0 = Nothing
     def __rtruediv__(self, other: Nat, /) -> option.Nothing:  # pragma: no cover
         return option.Nothing()
 
-    # forall n : nat, n == 0 -> 0 // n = 0
-    # forall n : nat, n != 0 -> 0 // n = 0
     def __floordiv__(self, other: Nat, /) -> Zero:
         return self
 
-    # forall n : nat, n // 0 = 0
     def __rfloordiv__(self, other: Nat, /) -> Zero:  # pragma: no cover
         return self
 
-    # forall n : nat, n == 0 -> 0 % n = 0
-    # forall n : nat, n != 0 -> 0 % n = 0
     def __mod__(self, other: Nat, /) -> Zero:
         return self
 
-    # forall n : nat, n % 0 = 0
     def __rmod__(self, other: Nat, /) -> Zero:  # pragma: no cover
         return self
 
@@ -165,8 +144,6 @@ class Succ[N: Nat]:
     # *- Comparison -* #
     # equality is handled by attrs
 
-    # forall n m : Nat, m == 0 -> Succ(n) > m
-    # forall n m : Nat, m != 0 -> n > m -> Succ(n) > Succ(m)
     def __gt__(self, other: Nat, /) -> bool:
         match other:
             case Zero():
@@ -174,8 +151,6 @@ class Succ[N: Nat]:
             case Succ():
                 return self.predecessor > other.predecessor
 
-    # forall n m : Nat, m == 0 -> Succ(n) >= m
-    # forall n m : Nat, m != 0 -> n >= m -> Succ(n) >= Succ(m)
     def __ge__(self, other: Nat, /) -> bool:
         match other:
             case Zero():
@@ -183,8 +158,6 @@ class Succ[N: Nat]:
             case Succ():
                 return self.predecessor >= other.predecessor
 
-    # forall n m : Nat, m == 0 -> Succ(m) < 0 = False
-    # forall n m : Nat, m != 0 -> n < m -> Succ(n) < Succ(m)
     def __lt__(self, other: Nat, /) -> bool:
         match other:
             case Zero():
@@ -192,8 +165,6 @@ class Succ[N: Nat]:
             case Succ():
                 return self.predecessor < other.predecessor
 
-    # forall n m : Nat, m == 0 -> Succ(m) < 0 = False
-    # forall n m : Nat, m != 0 -> n <= m -> Succ(n) <= Succ(m)
     def __le__(self, other: Nat, /) -> bool:
         match other:
             case Zero():
@@ -203,8 +174,6 @@ class Succ[N: Nat]:
 
     # *- Arithmetic -* #
 
-    # forall n m : Nat, m == 0 -> n + m = n
-    # forall n m : Nat, m != 0 -> n + m = succ(n) + pred(m)
     def __add__(self, other: Nat, /) -> typing.Self | Nat:
         match other:
             case Zero():
@@ -213,8 +182,6 @@ class Succ[N: Nat]:
                 # XXX: Pyright fails to infer the type of that
                 return Succ(self) + other.predecessor  # pyright: ignore[reportArgumentType, reportUnknownVariableType]
 
-    # forall n m : nat, m == 0 -> n - m = n
-    # forall n m : nat, m != 0 -> n - m = Succ(n) - Succ(m)
     def __sub__(self, other: Nat, /) -> typing.Self | Nat:
         match other:
             case Zero():
@@ -222,8 +189,6 @@ class Succ[N: Nat]:
             case Succ():
                 return self.predecessor - other.predecessor
 
-    # forall n m : nat, m == 0 -> n * m = 0
-    # forall n m : nat, m != 0 -> n + (n * pred(m))
     def __mul__(self, other: Nat, /) -> typing.Self | Nat:
         match other:
             case Zero():
