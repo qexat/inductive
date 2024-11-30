@@ -1,7 +1,7 @@
 [project]
 name = "inductive"
 description = "Inductive data structures for Python"
-version = "0.0.1-dev4"
+version = "0.0.1"
 readme = "README.md"
 keywords = [
     "inductive",
