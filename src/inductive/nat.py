@@ -21,7 +21,7 @@ import typing
 import attrs
 import option
 
-if typing.TYPE_CHECKING:
+if typing.TYPE_CHECKING:  # pragma: no cover
     import collections.abc
 
 
