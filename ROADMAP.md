@@ -6,9 +6,9 @@
 
 ## 0.0.2
 
-- [ ] Compare
-- [ ] Comparable
-- [ ] Comparator
+- [x] Compare
+- [x] Comparable
+- [x] Comparator
 
 ## 0.0.3
 
