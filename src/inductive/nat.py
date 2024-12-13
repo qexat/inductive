@@ -456,6 +456,28 @@ def pred[N: Nat](n: Zero | Succ[N]) -> Zero | N:
             return m
 
 
+def ascending_pair(first: Nat, second: Nat) -> tuple[Nat, Nat]:
+    """
+    Return a pair of the two arguments in ascending order.
+    """
+
+    if first <= second:
+        return first, second
+
+    return second, first
+
+
+def decreasing_pair(first: Nat, second: Nat) -> tuple[Nat, Nat]:
+    """
+    Return a pair of the two arguments in decreasing order.
+    """
+
+    if first >= second:
+        return first, second
+
+    return second, first
+
+
 # *- Constructors from built-in types -* #
 
 
