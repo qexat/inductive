@@ -148,6 +148,18 @@ class Zero:
 
     # *- Methods -* #
 
+    def clamp(self, left: Nat, right: Nat) -> Nat:  # noqa: PLR6301
+        """
+        Constraint the value between `left` and `right`.
+
+        If the number is already between them, this method does
+        nothing. If it is less than the minimum of the two
+        arguments, it returns that minimum. If it is greater
+        than their maximum, it returns that maximum.
+        """
+
+        return min(left, right)
+
     def double(self) -> Zero:
         """
         Return the double of the number.
@@ -366,6 +378,26 @@ class Succ[N: Nat]:
                 return self.predecessor.compare(n)
 
     # *- Methods -* #
+
+    def clamp(self, left: Nat, right: Nat) -> Nat | typing.Self:
+        """
+        Constraint the value between `left` and `right`.
+
+        If the number is already between them, this method does
+        nothing. If it is less than the minimum of the two
+        arguments, it returns that minimum. If it is greater
+        than their maximum, it returns that maximum.
+        """
+
+        minimum, maximum = ascending_pair(left, right)
+
+        if self <= minimum:
+            return minimum
+
+        if self >= maximum:
+            return maximum
+
+        return self
 
     def double(self) -> Nat:
         """
