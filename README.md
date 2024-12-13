@@ -37,8 +37,6 @@ However, this does not come without sacrificing some practicality: there is, as 
 
 With the `type` statement added in Python 3.12 and structural pattern matching with `match`/`case` in 3.10, the language unlocked a lot of power at the type level. The latter, especially, is the best friend of inductive types ; and `Nat` is not the only one that is very useful!
 
-Especially, I'm looking forward adding linked lists, inductive sets, trees, other numeric types that fit very well this little world.
-
 >[!IMPORTANT]
 > For now, only `Nat` is implemented, but it's just a matter of time before the others get added too 😄
 
