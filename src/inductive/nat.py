@@ -21,6 +21,8 @@ import typing
 import attrs
 import option
 
+from inductive import compare
+
 if typing.TYPE_CHECKING:  # pragma: no cover
     import collections.abc
 
@@ -130,6 +132,19 @@ class Zero:
 
     def __bytes__(self) -> bytes:
         return b""
+
+    # *- Protocols -* #
+
+    def compare(self, other: Nat, /) -> compare.Compare:  # noqa: PLR6301
+        """
+        Compare with another natural number.
+        """
+
+        match other:
+            case Zero():
+                return compare.EQUAL
+            case Succ():
+                return compare.LESS
 
     # *- Methods -* #
 
@@ -336,6 +351,19 @@ class Succ[N: Nat]:
 
     def __bytes__(self) -> bytes:
         return b"\x00" + bytes(self.predecessor)  # pyright: ignore[reportArgumentType]
+
+    # *- Protocols -* #
+
+    def compare(self, other: Nat, /) -> compare.Compare:
+        """
+        Compare with another natural number.
+        """
+
+        match other:
+            case Zero():
+                return compare.GREATER
+            case Succ(n):
+                return self.predecessor.compare(n)
 
     # *- Methods -* #
 
